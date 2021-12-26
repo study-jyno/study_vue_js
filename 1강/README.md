@@ -57,3 +57,53 @@ public html, 기타 파일 보관
 package.json 라이브러리 버전, 프로젝트 설정 기록
 
 # 2. Data Binding
+temlate에 평소 css , html 하던대로 하다가 vue 문법이 필요하면 사용
+
+데이터 바인딩? - Js데이터를 HTML에 꽂아넣는 문법
+
+js document 가져오소 가져온 innerHTML에 넣는건 번거로움
+
+vue는 값을 넣어두는 통이 있음
+data(){
+return{
+price1:60
+}
+}
+데이터는 object 자료형임 - JSON
+
+생성한 Data를 어떻게 사용하나
+template 내에서 {{ price1 }} 이렇게 해주면 됨
+
+이 문법을 왜 쓰는가?
+나중에 변경을 쉽게 할 수 있도록 하드코딩 하지 않는거임
+실시간 렌더링 기능을 이용하려고 - 그냥 하드코딩 안하려고 하는거임 - data에 있는 값이 변동되면 실시간으로 감지해 새로 그려줌 - 일일이 redraw할 필요 없음
+
+자주 변경될 일 없는 데이터들은 뭐 굳이 할 필요 없음
+
+이런식도 가능
+HTML 속성도 데이터 바인딩 가능
+단 속성에 넣고 싶을때는 : 으로 지정
+
+	<h4 class'red', :style='color_name'>
+	...
+	data() {
+		return{
+			...
+			color_name:'color : blue',
+			...
+		}
+	}
+
+
+# 3. V-for
+반복문 가능
+<태그 v-for="작명 in 몇회 " :key="작명">
+
+array 데이터 사용
+...
+menu_list = [1, 2, ...]
+<태그 v-for="작명 in menu_list " :key="작명">
+
+이런식으로 index도 사용할 수 있음 i가 index임
+menu_list = [1, 2, ...]
+<태그 v-for="(a, i) in menu_list " :key="a">
