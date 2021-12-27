@@ -107,3 +107,73 @@ menu_list = [1, 2, ...]
 이런식으로 index도 사용할 수 있음 i가 index임
 menu_list = [1, 2, ...]
 <태그 v-for="(a, i) in menu_list " :key="a">
+
+
+# 4. Event Handler
+
+해당 상품 신고 버튼 생성
+
+눌렀을 때 자바스크립트 실행하려면
+
+둘 다 vue 문법임
+<button v-on:click="신고수++">허위 매물 신고</button><span>신고수 : {{신고수}}</span>
+<button @click="신고수++">허위 매물 신고</button><span>신고수 : {{신고수}}</span>
+
+여러가지 이벤트 사용 가능
+@mouseover, ... 여러가지 있음
+
+
+이벤트 옆에 작성한 코드가 길어진다 - 함수로 뜯어냄
+
+함수를 어떻게 만들지? - 만드는 공간이 정해져 있음
+
+methods : {} 안에 만들면 됩니다
+
+data(){
+  return {
+    신고수 : 0,
+  },
+  methods : {
+    increase(){
+      this.신고수 += 1
+    }
+  }
+}
+다만 데이터를 사용하고 싶으면 this.데이터이름 이라고 사용해야 합니다.
+
+
+<div>
+  <h4>{{products[0]}}</h4>
+  <p>50만원</p>
+  <button @click="increase()">허위매물신고</button>
+  <span>신고수 : {신고수}</span>
+</div>
+
+함수 이름만 작성해도 됩니다.
+
+
+### 숙제
+
+  <div v-for="i in product_list.length" :key="i">
+    <h4>{{ product_list[i - 1] }}</h4>
+    <p>{{ price_list[i - 1] }} 만원</p>
+    <button @click="increase(i - 1)">허위 매물 신고</button>
+    <span>신고수 : {{ report_list[i - 1] }}</span>
+  </div>
+
+
+export default {
+  name: "App",
+  data() {
+    return {
+	  ...
+      report_list: [0, 0, 0],
+      product_list: ["역삼동원룸", "천호동원룸", "마포구원룸"],
+      price_list: [10, 20, 30],
+	  ...
+    };
+  },
+  methods: {
+    increase(index) {
+      this.report_list[index] += 1;
+    },

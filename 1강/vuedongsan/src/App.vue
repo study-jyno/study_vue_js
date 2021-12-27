@@ -5,10 +5,21 @@
   <h1>{{ logo }}</h1>
 
   <!-- <div v-for="(v, i) in products" :key=v> -->
-  <div v-for="i in product_list.length" :key=i>
+  <div v-for="i in product_list.length" :key="i">
     <h4>{{ product_list[i - 1] }}</h4>
-    <p>{{ price_list[i - 1]  }} 만원</p>
+    <p>{{ price_list[i - 1] }} 만원</p>
+    <button @click="increase(i - 1)">허위 매물 신고</button>
+    <span>신고수 : {{ report_list[i - 1] }}</span>
   </div>
+  <!-- <div>
+    <h4>{{ product_list[0] }}</h4>
+    <p>50만원</p>
+    <button @click="increase()">허위 매물 신고</button
+    ><span>신고수 : {{ 신고수 }}</span>
+    <button @mouseover="increase()">허위 매물 신고</button
+    ><span>신고수 : {{ 신고수 }}</span> -->
+  <!-- <button v-on:click="신고수++">허위 매물 신고</button><span>신고수 : {{신고수}}</span> -->
+  <!-- </div> -->
 </template>
 
 <script>
@@ -17,6 +28,8 @@ export default {
   data() {
     return {
       logo: "원룸샵",
+      신고수: 0,
+      report_list: [0, 0, 0],
       price1: 60,
       price2: 70,
       color: "color :blue",
@@ -24,6 +37,11 @@ export default {
       product_list: ["역삼동원룸", "천호동원룸", "마포구원룸"],
       price_list: [10, 20, 30],
     };
+  },
+  methods: {
+    increase(index) {
+      this.report_list[index] += 1;
+    },
   },
   components: {},
 };
