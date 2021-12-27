@@ -177,3 +177,84 @@ export default {
     increase(index) {
       this.report_list[index] += 1;
     },
+
+
+# 5 v-if /modal
+
+이미지 넣는법
+절대경로(http)는 그냥 넣으면 됨
+
+상대경로
+src/assets 안에 파일을 둠
+src에 있는거 가져올때는 ./로 지정함
+<img src="./assets/room0.jpg">
+이런식으로도 가능
+
+
+    <img :src="require(`${image_list[i-1]}`)"/>
+
+	data() {
+    return {
+		...
+      image_list: [
+        "./assets/room0.jpg",
+        "./assets/room1.jpg",
+        "./assets/room2.jpg",
+      ],
+	  ...
+
+### 모달창
+모달창? - 겉에 흐려지고 내용 보여주는거
+
+ui같은건 갑자기 생기는게 아니라 만들어 두고 보여줬다 안보여줬다 하는거
+
+<div class="black-dg">
+    <div class="white-dg">
+      <h4>상세페이지임</h4>
+      <p>상세 페이지 내용</p>
+    </div>
+  </div>
+
+body {
+  margin :0;
+}
+div {
+  box-sizing:border-box;
+}
+.black-dg{
+  width:100%;height: 100%;
+  background:rgba(0,0,0,0.5);
+  position:fixed;padding:20px;
+}
+.white-dg{
+  width:100%;
+  background:white;
+  border-radius:8px;
+  padding:20px;
+}
+
+동적인 ui 만드는 법
+0. HTML CSS 미리 정의해둠
+1. ui의 현재 상태를 데이터로 저장해둠
+2. 데이터에 따라 ui가 어떻게 보일지 작성
+
+## v-if
+
+조건식에 따라 보여줄지 안보여 줄지 결정함
+
+
+<div class="black-dg" v-if=modal_use>
+<div class="white-dg">
+	<h4>상세페이지임</h4>
+	<p>상세 페이지 내용</p>
+</div>
+</div>
+
+	data() {
+    return {
+		...
+      modal_use: true
+	  ...
+
+이 상황이면 modal 창이 나타남
+
