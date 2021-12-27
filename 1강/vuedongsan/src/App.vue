@@ -2,11 +2,12 @@
   <div class="menu">
     <a v-for="test in menu_list" :key="test">{{ test }}</a>
   </div>
-  {{ logo }}
+  <h1>{{ logo }}</h1>
 
-  <div v-for="item in products" :key="item">
-    <h4>{{ item }}</h4>
-    <p>50 만원</p>
+  <!-- <div v-for="(v, i) in products" :key=v> -->
+  <div v-for="i in product_list.length" :key=i>
+    <h4>{{ product_list[i - 1] }}</h4>
+    <p>{{ price_list[i - 1]  }} 만원</p>
   </div>
 </template>
 
@@ -20,7 +21,8 @@ export default {
       price2: 70,
       color: "color :blue",
       menu_list: ["Home", "Shop", "About"],
-      products: ["역삼동원룸", "천호동원룸", "마포구원룸"],
+      product_list: ["역삼동원룸", "천호동원룸", "마포구원룸"],
+      price_list: [10, 20, 30],
     };
   },
   components: {},
