@@ -3,7 +3,7 @@
     <div class="white-dg">
       <h4>{{ modal_title }}</h4>
       <p>{{ modal_content }}</p>
-      <button @click='modal_use=false'>닫기</button>
+      <button @click="modal_use = false">닫기</button>
     </div>
   </div>
   <div class="menu">
@@ -13,7 +13,11 @@
 
   <!-- <div v-for="(v, i) in products" :key=v> -->
   <div v-for="i in product_list.length" :key="i">
-    <img class="room-img" @click='modal_use=true' :src="require(`${image_list[i - 1]}`)" />
+    <img
+      class="room-img"
+      @click="modal_use = true"
+      :src="require(`${image_list[i - 1]}`)"
+    />
     <h4>{{ product_list[i - 1] }}</h4>
     <p>{{ price_list[i - 1] }} 만원</p>
     <button @click="increase(i - 1)">허위 매물 신고</button>
@@ -31,6 +35,8 @@
 </template>
 
 <script>
+import oneroom from "./assets/data.js";
+
 export default {
   name: "App",
   data() {
@@ -52,6 +58,7 @@ export default {
       menu_list: ["Home", "Shop", "About"],
       product_list: ["역삼동원룸", "천호동원룸", "마포구원룸"],
       price_list: [10, 20, 30],
+      oneroom_list: oneroom,
     };
   },
   methods: {

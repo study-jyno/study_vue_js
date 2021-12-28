@@ -258,3 +258,29 @@ div {
 
 이 상황이면 modal 창이 나타남
 
+# 6. 실제 데이터를 넣어보자
+ 
+
+실제 쇼핑몰은 서버에서 값을 받아와서 진행
+지금은 서버가 없기 때문에 받아왔다고 가정하고 진행
+
+긴 데이터는 js로 따로 관리할 예정
+이걸 import 해온다고 함
+
+지금은 asset/data.js 생성
+
+생성된 데이터를 import 하는 방법
+우선 data.js를 export 설정을 해줘야함
+
+변수 하나를 export 하는거임
+export 한 변수를 다른 파일에서 import 해서 사용하면 됨
+export는 보통 최하단에 사용함
+export {var1, var2, ..}
+import {var1, var2, ...} from  './location' 이런식으로 진행
+이 방식일때는 변수명 통일 해야함
+
+import 할때는 
+import apple from './assets/data.js'
+
+이제 실제 데이터를 상품 목록에 박아 넣자
+
