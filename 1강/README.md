@@ -284,3 +284,18 @@ import apple from './assets/data.js'
 
 이제 실제 데이터를 상품 목록에 박아 넣자
 
+HTML 속성 안에 데이터 바인딩은 :속성='data' 이런식으로 진행
+
+결과 
+
+  <div v-for="item in oneroom_list" :key="item">
+    <img
+      class="room-img"
+      @click="modal_use = true"
+      :src='item.image'
+    />
+    <h4>{{ item.title }}</h4>
+    <p>{{ item.content }}</p>
+    <p>{{ item.price }} 원</p>
+  </div>
+</template>

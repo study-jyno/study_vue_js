@@ -10,9 +10,7 @@
     <a v-for="test in menu_list" :key="test">{{ test }}</a>
   </div>
   <h1>{{ logo }}</h1>
-
-  <!-- <div v-for="(v, i) in products" :key=v> -->
-  <div v-for="i in product_list.length" :key="i">
+  <!-- <div v-for="i in product_list.length" :key="i">
     <img
       class="room-img"
       @click="modal_use = true"
@@ -22,16 +20,17 @@
     <p>{{ price_list[i - 1] }} 만원</p>
     <button @click="increase(i - 1)">허위 매물 신고</button>
     <span>신고수 : {{ report_list[i - 1] }}</span>
+  </div> -->
+  <div v-for="item in oneroom_list" :key="item">
+    <img
+      class="room-img"
+      @click="modal_use = true"
+      :src='item.image'
+    />
+    <h4>{{ item.title }}</h4>
+    <p>{{ item.content }}</p>
+    <p>{{ item.price }} 원</p>
   </div>
-  <!-- <div>
-    <h4>{{ product_list[0] }}</h4>
-    <p>50만원</p>
-    <button @click="increase()">허위 매물 신고</button
-    ><span>신고수 : {{ 신고수 }}</span>
-    <button @mouseover="increase()">허위 매물 신고</button
-    ><span>신고수 : {{ 신고수 }}</span> -->
-  <!-- <button v-on:click="신고수++">허위 매물 신고</button><span>신고수 : {{신고수}}</span> -->
-  <!-- </div> -->
 </template>
 
 <script>
