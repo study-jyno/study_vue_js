@@ -461,3 +461,45 @@ export default {
 숙제 상품목록도 컴포넌트로 바꾸자 - 이름은 Card
 데이터 수정은 우선 무시하고 진행
 
+  <Card 
+    :oneroom_list="oneroom_list"
+    :show_id="item.id"
+    v-for="(item) in oneroom_list" :key="item">
+    </Card>
+
+
+
+
+<template>
+  <div >
+    <img class="room-img" :src="oneroom_list[show_id].image" />
+    <!-- <h4
+      @click="
+        modal_use = true;
+        show_oneroom_id = i;
+      "
+    > -->
+    <h4>
+      {{ oneroom_list[show_id].title }}
+    </h4>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Card",
+  props: {
+    oneroom_list: Object,
+    show_id: Number,
+  },
+};
+</script>
+
+<style>
+.room-img {
+  width: 100%;
+  margin-top: 40px;
+}
+</style>
+
+숙제 풀이
