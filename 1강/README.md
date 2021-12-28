@@ -267,7 +267,7 @@ div {
 긴 데이터는 js로 따로 관리할 예정
 이걸 import 해온다고 함
 
-지금은 asset/data.js 생성
+지금은 assets/data.js 생성
 
 생성된 데이터를 import 하는 방법
 우선 data.js를 export 설정을 해줘야함
@@ -295,6 +295,47 @@ HTML 속성 안에 데이터 바인딩은 :속성='data' 이런식으로 진행
       :src='item.image'
     />
     <h4>{{ item.title }}</h4>
+    <p>{{ item.content }}</p>
+    <p>{{ item.price }} 원</p>
+  </div>
+</template>
+
+모달창 생성 시 해당 상품의 상세 페이지가 뜨도록 만들기
+각 상품 별 모달창을 만들어야 하나? - 아니지. 하나 만들고 해당 모달의 내부 값을 바꿔주면 됩니다.
+
+
+  <div class="black-dg" v-if="modal_use">
+    <div class="white-dg">
+      <h4>{{ oneroom_list[0].title }}</h4>
+      <p>{{ oneroom_list[0].content }}</p>
+      <button @click="modal_use = false">닫기</button>
+    </div>
+  </div>
+  이렇게 해놓고 선택된 id를 넣어주면 되겠다.
+
+
+<template>
+  <div class="black-dg" v-if="modal_use">
+    <div class="white-dg">
+      <h4>{{ oneroom_list[show_oneroom_id].title }}</h4>
+      <p>{{ oneroom_list[show_oneroom_id].content }}</p>
+      <button @click="modal_use = false">닫기</button>
+    </div>
+  </div>
+  <div class="menu">
+    <a v-for="test in menu_list" :key="test">{{ test }}</a>
+  </div>
+  <h1>{{ logo }}</h1>
+  <div v-for="item in oneroom_list" :key="item">
+    <img class="room-img" :src="item.image" />
+    <h4
+      @click="
+        modal_use = true;
+        show_oneroom_id = item.id;
+      "
+    >
+      {{ item.title }}
+    </h4>
     <p>{{ item.content }}</p>
     <p>{{ item.price }} 원</p>
   </div>

@@ -1,8 +1,10 @@
 <template>
   <div class="black-dg" v-if="modal_use">
     <div class="white-dg">
-      <h4>{{ modal_title }}</h4>
-      <p>{{ modal_content }}</p>
+      <h4>{{ oneroom_list[show_oneroom_id].title }}</h4>
+      <img class="room-img" :src="oneroom_list[show_oneroom_id].image" />
+      <p>{{ oneroom_list[show_oneroom_id].content }}</p>
+      <p>{{ oneroom_list[show_oneroom_id].price }} 원</p>
       <button @click="modal_use = false">닫기</button>
     </div>
   </div>
@@ -10,26 +12,15 @@
     <a v-for="test in menu_list" :key="test">{{ test }}</a>
   </div>
   <h1>{{ logo }}</h1>
-  <!-- <div v-for="i in product_list.length" :key="i">
-    <img
-      class="room-img"
-      @click="modal_use = true"
-      :src="require(`${image_list[i - 1]}`)"
-    />
-    <h4>{{ product_list[i - 1] }}</h4>
-    <p>{{ price_list[i - 1] }} 만원</p>
-    <button @click="increase(i - 1)">허위 매물 신고</button>
-    <span>신고수 : {{ report_list[i - 1] }}</span>
-  </div> -->
-  <div v-for="item in oneroom_list" :key="item">
-    <img
-      class="room-img"
-      @click="modal_use = true"
-      :src='item.image'
-    />
-    <h4>{{ item.title }}</h4>
-    <p>{{ item.content }}</p>
-    <p>{{ item.price }} 원</p>
+  <div v-for="(item, i) in oneroom_list" :key="item">
+    <h4
+      @click="
+        modal_use = true;
+        show_oneroom_id = i;
+      "
+    >
+      {{ item.title }}
+    </h4>
   </div>
 </template>
 
@@ -42,18 +33,10 @@ export default {
     return {
       logo: "원룸샵",
       // 신고수: 0,
+      show_oneroom_id: 0,
       modal_use: false,
       modal_title: "Modal Title",
       modal_content: "Modal Content",
-      report_list: [0, 0, 0],
-      price1: 60,
-      price2: 70,
-      color: "color :blue",
-      image_list: [
-        "./assets/room0.jpg",
-        "./assets/room1.jpg",
-        "./assets/room2.jpg",
-      ],
       menu_list: ["Home", "Shop", "About"],
       product_list: ["역삼동원룸", "천호동원룸", "마포구원룸"],
       price_list: [10, 20, 30],
