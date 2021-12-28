@@ -5,7 +5,7 @@
       <img class="room-img" :src="oneroom_list[show_oneroom_id].image" />
       <p>{{ oneroom_list[show_oneroom_id].content }}</p>
       <p>{{ oneroom_list[show_oneroom_id].price }} 원</p>
-      <!-- <button @click="modal_use = false">닫기</button> -->
+      <button @click="$emit('closeModal')">닫기</button>
       <!-- props는 read-only임 받아온거 수정하면 큰일남 -->
     </div>
   </div>

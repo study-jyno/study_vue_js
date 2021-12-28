@@ -1,13 +1,7 @@
 <template>
-  <div >
+  <div>
     <img class="room-img" :src="oneroom_list[show_id].image" />
-    <!-- <h4
-      @click="
-        modal_use = true;
-        show_oneroom_id = i;
-      "
-    > -->
-    <h4>
+    <h4 @click="call_emit()">
       {{ oneroom_list[show_id].title }}
     </h4>
   </div>
@@ -19,6 +13,11 @@ export default {
   props: {
     oneroom_list: Object,
     show_id: Number,
+  },
+  methods: {
+    call_emit() {
+      this.$emit("openModal", this.show_id);
+    },
   },
 };
 </script>

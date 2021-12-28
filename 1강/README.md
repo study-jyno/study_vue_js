@@ -502,4 +502,40 @@ export default {
 }
 </style>
 
+오브젝트 key=value 를 일일이 바인딩 해서 보내지 말고
+v-bind="오브젝트" 이렇게 전달하면 key=value 형식으로 전달됨
+
 숙제 풀이
+
+
+# 11. Custom Event
+
+modal을 다시 띄워보자
+왜 지금 못했지? - 데이터가 부모에 있는건데 자식은 부모의 값을 수정할 수 없음
+그럼 어떻게 하냐 - custom event 를 사용함
+그럼 부모에서 card 호출 할 때 click 이벤트를 추가 - 이벤트 버블링 발생 - 문제가 있으니 다른 방법을 해보자
+
+그럼 제목을 눌렀을 때 modal_use 값을 바꿔보자
+custom event - 자식이 부모한테 메세지를 보내는 개념임
+보내는법 수신하는법 2가지로 나눠져있음
+
+\$emit() 부모에게 메세지 전송
+\$emit('작명', 데이터)
+@click="$emit('openModal') 이러면 부모가 openModal 메세지를 전송 받음
+
+  <Card
+    @openModal="modal_use = true; show_oneroom_id = $event"
+
+이러면 openModal 데이터가 전송되면 오른쪽 자바스크립트를 실행함
+자식이 보낸 데이터는 $event 변수에 담겨있음
+
+자식이 부모에 있는 데이터를 변경하고 싶지만 그럴 수 없음
+그래서 자식은 부모에게 메세지만 보내고($emit('message_name', data_1, ...)) 부모가 그 이벤트를 수신할 때 <자식컴포넌트 @message_name=''> 이런식으로 수진
+
+$emit을 함수 안에서 하고 싶으면
+
+methods:{
+  function(){
+    this.$emit('openModal', 원룸.id)
+  }
+}
