@@ -340,3 +340,124 @@ HTML 속성 안에 데이터 바인딩은 :속성='data' 이런식으로 진행
     <p>{{ item.price }} 원</p>
   </div>
 </template>
+
+### v-else
+v-if 가 아니면 else를 보여주세요
+
+
+# Component?
+긴 html을 줄여서 작성 할 수 있도록 하는거
+
+할인 베너는 대충 만들어 보자
+ <div class="discount">
+    <h4>지금 결제하면 20% 할인</h4>
+  </div>
+
+이 html들을 한 글자로 줄일 수 있다 - component
+컴포넌트를 만들고 싶음 vue 파일 하나 넣으면 됨
+다만 형식을 지켜야함
+<template>
+  <div class="discount">
+    <h4>지금 결제하면 20% 할인</h4>
+  </div>
+</template>
+
+<script>
+export default {
+    name:'Discount',
+};
+</script>
+
+<style>
+.discount {
+  background: #eee;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+}
+</style>
+
+이제 이걸 어떻게 가져다 쓰나
+<Discount/> - 이렇게 해도 됩니다.
+아님 이렇게 <Discount></Discount>
+
+다만 가져올때 해야할 3 단계가 있음
+1. import
+import Discount from "./Discount.vue";
+2. 등록
+  components: {
+    사용할컴포넌트 : Discount
+    },
+3. 사용
+<사용할컴포넌트/> - 이렇게 해도 됩니다.
+아님 이렇게 <사용할컴포넌트></사용할컴포넌트>
+
+굳이 왜 컴포넌트를 사용할까?
+코드 관리하기 편하려고 - 분리해서 사용하면 쓰기 좋잖아
+재사용도 쉬워짐
+
+반복적으로 사용할 부분만 컴포넌트화 하는걸 좋음
+
+모달창도 컴포넌트화 해보자
+분리 했는데 왜 안뜰까? - 모달창에 데이터 바인딩을 해뒀는데 다른 파일엔 데이터가 없기 때문임
+- 데이터를 어떻게 넘겨줄까? - 이게 컴포넌트의 단점 - 데이터 관리가 복잡해짐
+
+# 9. Props
+컴포넌트에 값을 넘겨줄 수 없어서 modal이 뜨지 않았음
+데이터 바인딩은 같은 파일 내의 data만 가져다 쓸 수 있음
+그럼 이걸 어떻게 하느냐
+data를 복붙하냐? - 하지마 제발 - 하나의 데이터로만 관리하자
+
+보통 한군대에다 데이터를 몰아두고 필요할때 가져다 쓰는 방식으로 진행함
+가져다 쓰는거 - props
+
+부보/자식 컴퍼넌트
+App.vue / Modal.vue
+
+자식 컴포넌트가 부모 컴포넌트의 값을 가져오려면 props로 데이터를 전송 해야함
+과정 3가지
+1. 전송
+<Modal : oneroom_list="oneroom_list"></Modal>
+2. 등록
+export default {
+    name:'Modal',
+    props:{
+       oneroom_list:Object, 
+    }
+}
+이 자료형은 틀려도 됨 - 디버그 용임
+3. 사용
+<h4>{{ oneroom_list[show_oneroom_id].title }}</h4>
+      
+
+다른 값들도 가져오자
+1. 
+<Modal
+    :oneroom_list="oneroom_list"
+    :show_oneroom_id="show_oneroom_id"
+    :modal_use="modal_use"
+  ></Modal>
+
+2. 
+  props: {
+    oneroom_list: Object,
+    show_oneroom_id: Number,
+    modal_use: Boolean,
+  },
+};
+3. 
+      <h4>{{ oneroom_list[show_oneroom_id].title }}</h4>
+      <img class="room-img" :src="oneroom_list[show_oneroom_id].image" />
+      <p>{{ oneroom_list[show_oneroom_id].content }}</p>
+      <p>{{ oneroom_list[show_oneroom_id].price }} 원</p>
+
+
+받아온 데이터는 수정하지 말자 Read  Only임
+
+아니 그럼 Modal.vue에 데이터 만들면 되지 않음?
+- 하위 컴포넌트에 값을 만들어도 되지만 부모에서도 사용하면 부모에 만들어두셈
+그래서 가급적 데이터를 사용하는곳 들 중에 최상위에 데이터를 선언해두자
+
+숙제 상품목록도 컴포넌트로 바꾸자 - 이름은 Card
+데이터 수정은 우선 무시하고 진행
+

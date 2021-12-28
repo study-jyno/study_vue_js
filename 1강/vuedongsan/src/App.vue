@@ -1,18 +1,19 @@
 <template>
-  <div class="black-dg" v-if="modal_use">
-    <div class="white-dg">
-      <h4>{{ oneroom_list[show_oneroom_id].title }}</h4>
-      <img class="room-img" :src="oneroom_list[show_oneroom_id].image" />
-      <p>{{ oneroom_list[show_oneroom_id].content }}</p>
-      <p>{{ oneroom_list[show_oneroom_id].price }} 원</p>
-      <button @click="modal_use = false">닫기</button>
-    </div>
-  </div>
+  <Modal
+    :oneroom_list="oneroom_list"
+    :show_oneroom_id="show_oneroom_id"
+    :modal_use="modal_use"
+  ></Modal>
   <div class="menu">
     <a v-for="test in menu_list" :key="test">{{ test }}</a>
   </div>
+
+  <Discount></Discount>
+
   <h1>{{ logo }}</h1>
+
   <div v-for="(item, i) in oneroom_list" :key="item">
+    <img class="room-img" :src="item.image" />
     <h4
       @click="
         modal_use = true;
@@ -26,6 +27,9 @@
 
 <script>
 import oneroom from "./assets/data.js";
+
+import Discount from "./Discount.vue";
+import Modal from "./Modal.vue";
 
 export default {
   name: "App",
@@ -48,7 +52,10 @@ export default {
       this.report_list[index] += 1;
     },
   },
-  components: {},
+  components: {
+    Discount: Discount,
+    Modal: Modal,
+  },
 };
 </script> 
 
@@ -61,19 +68,6 @@ body {
 }
 div {
   box-sizing: border-box;
-}
-.black-dg {
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  padding: 20px;
-}
-.white-dg {
-  width: 100%;
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
 }
 
 #app {
