@@ -539,3 +539,102 @@ methods:{
     this.$emit('openModal', 원룸.id)
   }
 }
+
+# 12. 사용자의 인풋을 받는 법
+
+@input
+입력할 때마다 뭐 실행해주셈
+
+@change
+입력하고 커서 밖에 찍으면 실행해주셈
+
+둘이는 갱신 시점이 다름 - 입력마다 할지 입력 완료 하고 할지 결정하는거
+
+이벤트 리스너를 넣자
+이벤트 리스너? - 이벤트가 발생한 타켓의 정보를 알 수 있음
+`<input @input="month = $event.target.value">`
+$event.target.value => 인풋에 입력한 값 - 생 자바스크립트 문법임
+
+아래같이 진행 하면 됨
+
+```
+
+  <template>
+    <div class="black-dg" v-if="modal_use">
+      <div class="white-dg">
+        <h4>{{ oneroom_list[show_oneroom_id].title }}</h4>
+        <img class="room-img" :src="oneroom_list[show_oneroom_id].image" />
+        <p>{{ oneroom_list[show_oneroom_id].content }}</p>
+        <input @input="month = $event.target.value" />
+        <p>
+          {{ month }} 개월 선택함 :
+          {{ month * oneroom_list[show_oneroom_id].price }} 원
+        </p>
+        <p>{{ oneroom_list[show_oneroom_id].price }} 원</p>
+        <button @click="$emit('closeModal')">닫기</button>
+        <!-- props는 read-only임 받아온거 수정하면 큰일남 -->
+      </div>
+    </div>
+  </template>
+
+  <script>
+  export default {
+    name: "Modal",
+    data() {
+      return {
+        month: 1,
+      };
+    },
+    props: {
+      oneroom_list: Object,
+      show_oneroom_id: Number,
+      modal_use: Boolean,
+    },
+  };
+  </script>
+
+```
+
+
+이거의 축약 버전이 있음 - v-model - 아래 두 결과가 똑같음
+<input @input="month = $event.target.value" />
+<input v-model="month"/>
+
+여러가지 v-model 전부 가능
+
+<input v-model="month"/>
+<textarea v-model="month"/>
+
+여러개 다 가능하지만 초기 설정값에 선언한 대로 받아서 넣어주기 때문에 유의해야함
+지금 숫자로 선언했기 떄문에 textarea에서 string 넣어주면 NaN에러 발생함
+
+<input v-model="month" />
+<textarea v-model="month" />
+<select v-model="month">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+</select>
+
+여러가지 방법 가능
+
+주의 - 사용자가 input에 입력한 것은 전부 문자자료형
+
+<input v-model="month" />
+<p>
+  {{ month }} 개월 선택함 :
+  {{ month + oneroom_list[show_oneroom_id].price }} 원
+이런식으로 문자를 넣으면 아래와 같이 문제 발사ㅐㅇ
+3222 개월 선택함 : 3222340000 원
+따라서 숫자로 변환해서 받아야함
+
+<input v-model.number="month" />
+<p>
+  {{ month }} 개월 선택함 :
+  {{ month + oneroom_list[show_oneroom_id].price }} 원
+11123 개월 선택함 : 351123 원
+
+하지만 문자 입력을 막을 순 없음 - 이걸 막을 수 있음
+
+# 13.watch
+인풋에 제한을 두자
