@@ -42,18 +42,16 @@ vuedongsan 폴더 생성됨
 `npm run serve`
 
 node js 왜 설치함?
-
-npm,쓰려고 각종 웹 개발 라이브러리 설치 도우미
+- npm,쓰려고 각종 웹 개발 라이브러리 설치 도우미
 
 npm으로 @vue/cli 설치함
+- vue 프로젝트 빠르게 생성해주는 라이브러리
 
-vue 프로젝트 빠르게 생성해주는 라이브러리
+프로젝트 생성은 `vue create PROJECT_NAME`
 
-프로젝트 생성은 vue create PROJECT_NAME
+`App.vue`가 메인 페이지
 
-App.vue가 메인 페이지
-
-web browser는 vue 파일을 못읽음
+### web browser는 vue 파일을 못읽음
 - 그럼 어떻게 읽음?
 - html에 vue를 박아넣음 - 아직은 몰라도 됨
 
@@ -67,7 +65,7 @@ temlate에 평소 css , html 하던대로 하다가 vue 문법이 필요하면 �
 
 데이터 바인딩? - Js데이터를 HTML에 꽂아넣는 문법
 
-js document 가져오소 가져온 innerHTML에 넣는건 번거로움
+js `getElementBy__.innerHTML = Data` -> 너무 번거로움
 
 vue는 값을 넣어두는 통이 있음
 ```javascript
@@ -78,7 +76,7 @@ data(){
 }
 ```
 
-데이터는 object 자료형임 - JSON
+데이터는 `object` 자료형임 - JSON
 
 생성한 Data를 어떻게 사용하나
 * template 내에서 {{ price1 }} 이렇게 해주면 됨
@@ -96,15 +94,15 @@ HTML 속성도 데이터 바인딩 가능
 
 단 속성에 넣고 싶을때는 : 으로 지정
 ```HTML
-	<h4 class'red', :style='color_name'>
-	...
-	data() {
-		return{
-			...
-			color_name:'color : blue',
-			...
-		}
-	}
+<h4 class='red', :style='color_name'>
+...
+data() {
+  return{
+    ...
+    color_name:'color : blue',
+    ...
+  }
+}
 ```
 
 # 3. V-for
@@ -113,8 +111,6 @@ HTML 속성도 데이터 바인딩 가능
 `<태그 v-for="작명 in 몇회 " :key="작명">`
 
 array 데이터 사용
-
-...
 
 `menu_list = [1, 2, ...]`
 
@@ -149,7 +145,7 @@ menu_list = [1, 2, ...]
 함수를 어떻게 만들지? - 만드는 공간이 정해져 있음
 
 methods : {} 안에 만들면 됩니다
-```
+```Javascript
 data(){
   return {
     신고수 : 0,
@@ -161,29 +157,34 @@ data(){
   }
 }
 ```
-다만 데이터를 사용하고 싶으면 `this.데이터이름` 이라고 사용해야 합니다.
+다만 `methods` 내에서 선언된 데이터를 사용하고 싶으면 `this.데이터이름` 이라고 사용해야 합니다.
 
 ```HTML
 <div>
   <h4>{{products[0]}}</h4>
   <p>50만원</p>
   <button @click="increase()">허위매물신고</button>
+  <!-- <button @click="increase">허위매물신고</button> -->
+  <!-- 함수 이름만 작성해도 됩니다. -->
   <span>신고수 : {신고수}</span>
 </div>
 ```
-함수 이름만 작성해도 됩니다.
 
 
 ### 숙제
 
 ```HTML
+<template>
   <div v-for="i in product_list.length" :key="i">
     <h4>{{ product_list[i - 1] }}</h4>
     <p>{{ price_list[i - 1] }} 만원</p>
     <button @click="increase(i - 1)">허위 매물 신고</button>
     <span>신고수 : {{ report_list[i - 1] }}</span>
   </div>
+</template>
 
+<script>
+...
 export default {
   name: "App",
   data() {
@@ -199,27 +200,29 @@ export default {
     increase(index) {
       this.report_list[index] += 1;
     },
-
+    ...
+  }
+}
+</script>
 ```
 
-# 5 v-if /modal
+# 5. v-if /modal
 
 이미지 넣는법
 - 절대경로(http)는 그냥 넣으면 됨
 
 상대경로
-
-src/assets 안에 파일을 둠
-
-src에 있는거 가져올때는 ./로 지정함
+- src/assets 안에 파일을 둠
+- src에 있는거 가져올때는 ./로 지정함
 
 `<img src="./assets/room0.jpg">`
 
-이런식으로도 가능
+아래 방식으로도 가능
 
 ```HTML
 <img :src="require(`${image_list[i-1]}`)"/>
 
+<script>
 data() {
   return {
   ...
@@ -229,11 +232,14 @@ data() {
       "./assets/room2.jpg",
     ],
   ...
+
+</script>
 ```
-### 모달창
+## 모달창
 모달창? - 겉에 흐려지고 내용 보여주는거
 
 ui같은건 갑자기 생기는게 아니라 만들어 두고 보여줬다 안보여줬다 하는거
+
 ```HTML
 <div class="black-dg">
   <div class="white-dg">
@@ -242,6 +248,7 @@ ui같은건 갑자기 생기는게 아니라 만들어 두고 보여줬다 안�
   </div>
 </div>
 
+<style>
 body {
   margin :0;
 }
@@ -259,13 +266,12 @@ div {
   border-radius:8px;
   padding:20px;
 }
+</style>
 ```
-
-동적인 ui 만드는 법
-
-0. HTML CSS 미리 정의해둠
-1. ui의 현재 상태를 데이터로 저장해둠
-2. 데이터에 따라 ui가 어떻게 보일지 작성
+### 동적인 ui 만드는 법
+1. HTML CSS 미리 정의해둠
+2. ui의 현재 상태를 데이터로 저장해둠
+3. 데이터에 따라 ui가 어떻게 보일지 작성
 
 ## v-if
 
@@ -288,7 +294,6 @@ div {
 이 상황이면 modal 창이 나타남
 
 # 6. 실제 데이터를 넣어보자
- 
 
 실제 쇼핑몰은 서버에서 값을 받아와서 진행
 
@@ -342,7 +347,7 @@ HTML 속성 안에 데이터 바인딩은 :속성='data' 이런식으로 진행
     </div>
   </div>
 ```
-  이렇게 해놓고 선택된 id를 넣어주면 되겠다.
+이렇게 해놓고 선택된 id를 넣어주면 되겠다.
 
 ```HTML
 <template>
@@ -973,4 +978,6 @@ export default {
 - 위의 주석이 문제였고 주석처엄 별도의 로딩을 해줘야함
 - 하지만 몇번 하다보면 또 정렬 안되기 시작함
 - sortBack의 주석으로 해결
+
+# 16. Lifecycle Hooks
 
