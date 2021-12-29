@@ -794,3 +794,81 @@ export default {
 
 여러가지 폼 벨리데이션 가능함
 - 라이브러리 설치하셈 - 그럼 굳이 watcher 사용 한해도 됨
+
+
+# 14. Transition
+
+모달창 뜰 때 야니메이션 넣어보자
+
+CSS로 애니메이션 줄 수 있음
+1. 시작 전 class 명
+2. 애니메이션 끝난 후 Class 명
+3. 그리고 원할 때 2번 class 명 부착
+
+
+```HTML
+<div class="start end">
+  <Modal
+    @closeModal="modal_use = false"
+    :oneroom_list="oneroom_list"
+    :show_oneroom_id="show_oneroom_id"
+    :modal_use="modal_use"
+  ></Modal>
+</div>
+.start {
+  opacity: 0; # 보여줄지 말지
+  transition: all 1s; # 해당 엘리먼트의 모든 요소 1초동안 변하게 함
+}
+
+.end {
+  opacity: 1;
+}
+```
+
+이제 모달창 열렸니가 True 일때만 .end를 부착해 보자.
+
+### class 명을 조건부로 넣을려면
+```HTML
+<!-- <div class="start" :class="{class_name : TRUE|FALSE }"> -->
+<div class="start" :class="{end : modal_use}">
+```
+
+이거보다 쉽게 할 수 있음 - vue 에서 <transition> 기능을 제공해줌
+
+1. 애니메이션 주고싶은 요소를 <transition>으로 감싸기
+```HTML
+<transition name="fade">
+  ...
+</transition>
+```
+
+2. class 명 3개 작성 - style안에 작성
+```CSS
+.이름-enter-from {
+  시작 스타일
+}
+.이름-enter-active {
+  transition
+}
+.이름-enter-to {
+  끝날 때 스타일
+}
+```
+```CSS
+.fade-enter-from {
+  transform: translateY(-1000px);
+}
+.fade-enter-active {
+  transition: all 1s;
+}
+.fade-enter-to {
+  transform: translateY(0);
+}
+/* 퇴장 시 애니메이션을 주고 싶으면 enter를 leave로 바꿔서 작성하면 됨 */
+.fade-leave-active {
+  transition: all 1s;
+}
+.fade-leave-to {
+  transform: translateY(-1000px);
+}
+```

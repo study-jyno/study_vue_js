@@ -1,10 +1,13 @@
 <template>
-  <Modal
-    @closeModal="modal_use = false"
-    :oneroom_list="oneroom_list"
-    :show_oneroom_id="show_oneroom_id"
-    :modal_use="modal_use"
-  ></Modal>
+  "
+  <transition name="fade">
+    <Modal
+      @closeModal="modal_use = false"
+      :oneroom_list="oneroom_list"
+      :show_oneroom_id="show_oneroom_id"
+      :modal_use="modal_use"
+    ></Modal>
+  </transition>
   <div class="menu">
     <a v-for="test in menu_list" :key="test">{{ test }}</a>
   </div>
@@ -104,5 +107,31 @@ div {
 .room-img {
   width: 100%;
   margin-top: 40px;
+}
+/* .fade-enter-from {
+  opacity: 0;
+}
+.fade-enter-active {
+  transition: all 1s;
+}
+.fade-enter-to {
+  opacity: 1;
+} */
+
+.fade-enter-from {
+  transform: translateY(-1000px);
+}
+.fade-enter-active {
+  transition: all 1s;
+}
+.fade-enter-to {
+  transform: translateY(0);
+}
+
+.fade-leave-active {
+  transition: all 1s;
+}
+.fade-leave-to {
+  transform: translateY(-1000px);
 }
 </style>
