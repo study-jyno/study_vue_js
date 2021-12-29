@@ -1,5 +1,4 @@
 <template>
-  "
   <transition name="fade">
     <Modal
       @closeModal="modal_use = false"
@@ -12,7 +11,7 @@
     <a v-for="test in menu_list" :key="test">{{ test }}</a>
   </div>
 
-  <Discount></Discount>
+  <Discount v-if="showDiscount == true"></Discount>
   <button @click="priceSort">가격순 정렬</button>
   <button @click="sortBack">정렬 취소</button>
 
@@ -65,20 +64,26 @@ export default {
       price_list: [10, 20, 30],
       oneroom_list_original: [...oneroom],
       oneroom_list: oneroom,
+      showDiscount: true,
     };
   },
   methods: {
     increase(index) {
       this.report_list[index] += 1;
     },
-    priceSort(){
-      this.oneroom_list.sort(function(a, b){
-        return a.price  - b.price
+    priceSort() {
+      this.oneroom_list.sort(function (a, b) {
+        return a.price - b.price;
       });
     },
-    sortBack(){
-      this.oneroom_list = [...this.oneroom_list_original]
-    }
+    sortBack() {
+      this.oneroom_list = [...this.oneroom_list_original];
+    },
+  },
+  mounted() {
+    setInterval(()=>{
+      this.showDiscount = false;
+    }, 2000)
   },
   components: {
     Discount: Discount,

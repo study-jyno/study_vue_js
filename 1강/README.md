@@ -981,3 +981,71 @@ export default {
 
 # 16. Lifecycle Hooks
 
+할인창 같은걸 표시 후 2초뒤에 없에고 싶다? - Lifecycle로 처리함
+Vue 공식문서에서 Lifecycle을 설명함 - 이게 뭐냐
+컴포넌트들이 생겼다 삭제되는 과정
+create stap - data 존재
+mount - 데이터를 html을 장착하는 단계
+updata - HTML이 실시간 재 렌더링이 된다 - 실제로는 HTML이 바뀌는게 아니라 컴포넌트가 바뀌는거임
+unmount - 삭제
+
+이걸 왜 배우냐? - 각 상태 변환 과정 마다 hook을 걸어서 각 단계 시행 전 뭘 해달라 요청할 수 있음
+
+Lifecycle Hook을 쓰려고 Lifecycle을 배우는거임
+
+훅은 어디다 거는가?
+
+```HTML
+<template>
+...
+<Discount v-if="showDiscount == true"></Discount>
+...
+</template>
+<script>
+...
+export default {
+  name: "App",
+  data() {
+    return {
+      ...
+      showDiscount: true,
+    };
+  },
+  methods: {
+    ...
+  },
+  // 여기에 위치함
+  // mounted 말고 다른 훅들도 존재함
+  // https://v3.ko.vuejs.org/api/options-lifecycle-hooks.html
+  mounted() {
+    // setTimeout JS 문법임
+    // ()=> 이거 뭐임? arrow function
+    // this 쓸 때 이렇게 하랍니다. - 찾아봐야겠다
+    // 바깥에 있는 this를 제대로 가져다 쓸 수 있다네요
+    // this를 쓸 일이 있다면 다 arrow function을 사용하자
+    setTimeout(()=>{
+      this.showDiscount = false;
+    }, 2000)
+  },
+  components: {
+    Discount: Discount,
+    ...
+  },
+};
+</script> 
+
+```
+
+이건 모든 컴포넌트에서 사용할 수 있음
+- modal.vue에 작성하면 modal이 mount 되자마자 해주세요 라고 할 수 있음
+
+이걸 더 요긴하게 사용할 수 있는건 서버에서 AJAX로 데이터 가져올 때 lifecycle hook 안에서 사용함
+- created(HTML 생성 전), mounted 에서 함
+
+숙제
+1. 1초마다 할인율 1퍼씩 떨구기
+2. modal input 안에 2를 기입했을 때 3개월 부터 판매한다고 알람을 띄우기
+        
+    watcher로 하면 될듯
+
+내일 하자
