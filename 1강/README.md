@@ -982,19 +982,21 @@ export default {
 # 16. Lifecycle Hooks
 
 할인창 같은걸 표시 후 2초뒤에 없에고 싶다? - Lifecycle로 처리함
+
 Vue 공식문서에서 Lifecycle을 설명함 - 이게 뭐냐
+
 컴포넌트들이 생겼다 삭제되는 과정
-create stap - data 존재
-mount - 데이터를 html을 장착하는 단계
-updata - HTML이 실시간 재 렌더링이 된다 - 실제로는 HTML이 바뀌는게 아니라 컴포넌트가 바뀌는거임
-unmount - 삭제
+1. create stap - data 존재
+2. mount - 데이터를 html을 장착하는 단계
+3. updata - HTML이 실시간 재 렌더링이 된다 - 실제로는 HTML이 바뀌는게 아니라 컴포넌트가 바뀌는거임
+4. unmount - 삭제
 
-이걸 왜 배우냐? - 각 상태 변환 과정 마다 hook을 걸어서 각 단계 시행 전 뭘 해달라 요청할 수 있음
+이걸 왜 배우냐?
+- 각 상태 변환 과정 마다 hook을 걸어서 각 단계 시행 전 뭘 해달라 요청할 수 있음
 
-Lifecycle Hook을 쓰려고 Lifecycle을 배우는거임
+<b>Lifecycle Hook을 쓰려고 Lifecycle을 배우는거임</b>
 
 훅은 어디다 거는가?
-
 ```HTML
 <template>
 ...
