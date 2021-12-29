@@ -13,6 +13,8 @@
   </div>
 
   <Discount></Discount>
+  <button @click="priceSort">가격순 정렬</button>
+  <button @click="sortBack">정렬 취소</button>
 
   <h1>{{ logo }}</h1>
 
@@ -61,6 +63,7 @@ export default {
       menu_list: ["Home", "Shop", "About"],
       product_list: ["역삼동원룸", "천호동원룸", "마포구원룸"],
       price_list: [10, 20, 30],
+      oneroom_list_original: [...oneroom],
       oneroom_list: oneroom,
     };
   },
@@ -68,6 +71,14 @@ export default {
     increase(index) {
       this.report_list[index] += 1;
     },
+    priceSort(){
+      this.oneroom_list.sort(function(a, b){
+        return a.price  - b.price
+      });
+    },
+    sortBack(){
+      this.oneroom_list = [...this.oneroom_list_original]
+    }
   },
   components: {
     Discount: Discount,

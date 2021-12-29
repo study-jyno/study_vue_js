@@ -872,3 +872,105 @@ CSS로 애니메이션 줄 수 있음
   transform: translateY(-1000px);
 }
 ```
+
+# 15. sort
+
+정렬 버튼을 만들어 보자
+
+data의 데이터들을 정렬하면 됩니다.
+
+예전에 javascript였다면 2단계로 진행해야함
+1. 정렬
+2. HTML에 반영해 주세요
+
+vue는 이렇게 안하고 값만 정렬하면 됨 - data가 변동되면 알아서 반영하기 때문
+
+```HTML
+
+<script>
+
+export default {
+  name: "App",
+  data() {
+    return {
+      ...
+      oneroom_list: oneroom,
+      ...
+    };
+  },
+  methods: {
+    ...
+    prioceSort(){     
+      this.oneroom_list.sort(function(a, b){
+        return a.price  - b.price
+      });
+      /*
+      왜 이렇게 하는가
+      sort는 근본이 문자열 정렬
+      따라서 숫자 정렬로 로직을 사용하기 위해서 - 연산 시행
+
+      주의 - sort는 원본을 변형 시켜버림
+            map을 사용해서 값을 유지할 수 있음
+      */
+    }
+    }
+    ...
+  },
+};
+</script> 
+```
+
+이렇게 하면 sort에서 원본 값을 변경시켜버림 - 요즘 유행은 원본 데이터는 유지하는게 좋음
+
+따라서 오리지널을 유지하고 복사본을 변경시키자
+```HTML
+
+<script>
+import oneroom from "./assets/data.js";
+
+import Discount from "./Discount.vue";
+import Modal from "./Modal.vue";
+import Card from "./Card.vue";
+
+export default {
+  name: "App",
+  data() {
+    return {
+      ...
+      oneroom_list_original: oneroom,
+      oneroom_list: oneroom,
+      /*
+      여기가 문제임 - 각각 다른 array 를 만들어 주는게 아니라
+      같은 array를 가져다 쓰는거임
+      그럼 어떻게 해?
+      oneroom_list_original : [...oneroom]
+      */
+    };
+  },
+  methods: {
+    ...
+    priceSort(){
+      this.oneroom_list.sort(function(a, b){
+        return a.price  - b.price
+      });
+    },
+    sortBack(){
+      this.oneroom_list = this.oneroom_list_original
+      /*
+      여기가 문제임 - Array 에서 = 연산은 call by reference 해버림
+      새로 생성해서 줘야함
+
+      this.oneroom_list = [...this.oneroom_list_original]
+      */
+    }
+  },
+  ...
+};
+</script> 
+```
+이렇게 하면 될거 같다?
+- 아닐거 같은데 call by reference라 되돌리고 나면 망가질듯
+- 위의 주석이 문제였고 주석처엄 별도의 로딩을 해줘야함
+- 하지만 몇번 하다보면 또 정렬 안되기 시작함
+- sortBack의 주석으로 해결
+
