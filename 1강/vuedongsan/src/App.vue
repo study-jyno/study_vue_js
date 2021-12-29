@@ -1,6 +1,6 @@
 <template>
   <Modal
-    @closeModal='modal_use = false'
+    @closeModal="modal_use = false"
     :oneroom_list="oneroom_list"
     :show_oneroom_id="show_oneroom_id"
     :modal_use="modal_use"
@@ -14,7 +14,10 @@
   <h1>{{ logo }}</h1>
 
   <Card
-    @openModal="modal_use = true; show_oneroom_id=$event"
+    @openModal="
+      modal_use = true;
+      show_oneroom_id = $event;
+    "
     :oneroom_list="oneroom_list"
     :show_id="item.id"
     v-for="item in oneroom_list"

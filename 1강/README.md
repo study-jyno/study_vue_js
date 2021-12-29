@@ -638,3 +638,56 @@ $event.target.value => 인풋에 입력한 값 - 생 자바스크립트 문법�
 
 # 13.watch
 인풋에 제한을 두자
+
+input에 문자 입력하면 경고문을 띄우고 싶다 - watch
+
+데이터 감시하려면 watch:{}
+
+export default {
+  name: "Modal",
+  data() {
+    return {
+      month: 1,
+    };
+  },
+
+  watch: {
+    month() {},
+    # month 라는 데이터가 변할 때 마다 여기있는 코드 실행됨
+
+  },
+  ...
+};
+</script> 
+
+```
+    month(a) { // a == month 데이터임
+        // 사용자가 month를 글자로 입력하면 경고문 띄워주셈
+        // 사용자가 month에 입력한 데이터가 13보다 크면 경구몬 띄우기
+        if(a >= 13){
+            alert('13 이상 입력하지 마셈');
+        }
+    },
+```
+
+숙제
+```
+  watch: {
+    // 함수명을 감시 할 데이터 명으로 작성하면 됨
+    month(a, b) {
+      // a == month 데이터임 b== 변경 전 데이터
+      // 사용자가 month를 글자로 입력하면 경고문 띄워주셈
+      // 사용자가 month에 입력한 데이터가 13보다 크면 경구몬 띄우기
+      if (a >= 13) {
+        alert("13 이상 입력하지 마셈");
+        this.month = 1;
+      }
+      if (typeof a == "string"){
+        alert("문자 입력 하지 마셈");
+        this.month = b;
+      }
+    },
+  },
+```
+
+여러가지 폼 벨리데이션 가능함  - 라이브러리 설치하셈 - 그럼 굳이 watcher 사용 한해도 됨
