@@ -1141,7 +1141,7 @@ export default {
 ...
 ```
 2번 다른 방법
-```
+```javascript
 beforeUpdate(){
     if (this.month == 2){
       alert('2개월은 너무 적음.. 안팝니다')
