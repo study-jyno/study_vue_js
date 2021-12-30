@@ -21,7 +21,7 @@ export default {
   name: "Modal",
   data() {
     return {
-      month: 1,
+      month: 3,
     };
   },
 
@@ -31,6 +31,10 @@ export default {
       // a == month 데이터임 b== 변경 전 데이터
       // 사용자가 month를 글자로 입력하면 경고문 띄워주셈
       // 사용자가 month에 입력한 데이터가 13보다 크면 경구몬 띄우기
+      if (a <= 2) {
+        alert("3개월 이상 판매함");
+        this.month = b;
+      }
       if (a >= 13) {
         alert("13 이상 입력하지 마셈");
         this.month = 1;

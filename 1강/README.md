@@ -1050,4 +1050,89 @@ export default {
         
     watcher로 하면 될듯
 
-내일 하자
+### 숙제
+```HTML
+<!-- App.vue -->
+<template>
+  ...
+  <Discount :discountNumber="discountNumber" v-if="showDiscount == true"></Discount>
+  ...
+</template>
+
+<script>
+import Discount from "./Discount.vue";
+...
+export default {
+  name: "App",
+  data() {
+    return {
+      ...
+      discountNumber:30,
+    };
+  },
+  methods: {
+    ...
+  },
+  mounted() {
+    setInterval(()=>{
+      this.discountNumber -= 1;
+    }, 1000)
+    // 할인율 1초마다 떨구기
+  },
+  components: {
+    Discount: Discount,
+  },
+};
+</script>
+...
+```
+
+```HTML
+<template>
+  <div class="discount">
+    <h4>지금 결제하면 {{ discountNumber }}% 할인</h4>
+
+    <!-- 할인율 1초마다 떨구기 -->
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Discount",
+  props: {
+    discountNumber: Number,
+  },
+};
+</script>
+...
+```
+
+```HTML
+<!-- 2. 3개월 부터 판매함 -->
+<template>
+  ...
+</template>
+
+<script>
+export default {
+  name: "Modal",
+  data() {
+    return {
+      month: 3,
+    };
+  },
+
+  watch: {
+    month(a, b) {
+      if (a <= 2) {
+        alert("3개월 이상 판매함");
+        this.month = b;
+      }
+      // 3개월 이상 판매함
+      ...
+  },
+  ...
+};
+</script>
+...
+```

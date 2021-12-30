@@ -11,7 +11,7 @@
     <a v-for="test in menu_list" :key="test">{{ test }}</a>
   </div>
 
-  <Discount v-if="showDiscount == true"></Discount>
+  <Discount :discountNumber="discountNumber" v-if="showDiscount == true"></Discount>
   <button @click="priceSort">가격순 정렬</button>
   <button @click="sortBack">정렬 취소</button>
 
@@ -65,6 +65,7 @@ export default {
       oneroom_list_original: [...oneroom],
       oneroom_list: oneroom,
       showDiscount: true,
+      discountNumber:30,
     };
   },
   methods: {
@@ -82,8 +83,8 @@ export default {
   },
   mounted() {
     setInterval(()=>{
-      this.showDiscount = false;
-    }, 2000)
+      this.discountNumber -= 1;
+    }, 1000)
   },
   components: {
     Discount: Discount,
