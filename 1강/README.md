@@ -1121,18 +1121,30 @@ export default {
       month: 3,
     };
   },
-
-  watch: {
-    month(a, b) {
-      if (a <= 2) {
+  ...
+  // watcher 말고 updated를 사용해서 해보자
+  // nextTick?
+  /*
+  updated는 모든 하위 컴포넌트가 다시 렌더링되었음을 보장하지 않습니다. 전체 화면이 재렌더링 될 때까지 기다리려면, updated 내부에서 vm.$nextTick를 사용합니다
+  */
+  updated() {
+    this.$nextTick(() => {
+      if (this.month <= 2) {
         alert("3개월 이상 판매함");
-        this.month = b;
+        this.month = 3;
       }
-      // 3개월 이상 판매함
-      ...
+    });
   },
   ...
 };
 </script>
 ...
+```
+2번 다른 방법
+```
+beforeUpdate(){
+    if (this.month == 2){
+      alert('2개월은 너무 적음.. 안팝니다')
+    }
+ }
 ```

@@ -24,26 +24,33 @@ export default {
       month: 3,
     };
   },
-
   watch: {
     // 함수명을 감시 할 데이터 명으로 작성하면 됨
     month(a, b) {
       // a == month 데이터임 b== 변경 전 데이터
       // 사용자가 month를 글자로 입력하면 경고문 띄워주셈
       // 사용자가 month에 입력한 데이터가 13보다 크면 경구몬 띄우기
-      if (a <= 2) {
-        alert("3개월 이상 판매함");
-        this.month = b;
-      }
+      //   if (a <= 2) {
+      //     alert("3개월 이상 판매함");
+      //     this.month = b;
+      //   }
       if (a >= 13) {
         alert("13 이상 입력하지 마셈");
         this.month = 1;
       }
-      if (typeof a == "string"){
+      if (typeof a == "string") {
         alert("문자 입력 하지 마셈");
         this.month = b;
       }
     },
+  },
+  updated() {
+    this.$nextTick(() => {
+      if (this.month <= 2) {
+        alert("3개월 이상 판매함");
+        this.month = 3;
+      }
+    });
   },
   props: {
     oneroom_list: Object,
