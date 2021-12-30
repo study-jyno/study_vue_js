@@ -367,5 +367,252 @@ export default {
 `/list` 라는 URL로 접속하면 `<List/>` 를 보여주자
 
 
+# 18. vue-router
 
+라우터를 이용해 페이지로 쪼개보자
 
+누군가 /list로 접근하면 <List> 로 보여주자
+
+vue router 를 설치하자
+
+설치 전 terminal 실행 서버 종료
+- `npm install vue-router@4`
+- `yarn add vue-router@4` 저는 yarn으로 진행합니다
+
+이제 라우팅 파일 사용을 위한 세팅을 해보자
+- main.js 에서 라우팅 세팅을 함
+
+main.js에서 직접 선언하는게 아니라 다른 파일에서 선언 후 불러온다.
+
+```js
+// src/router.js
+import { createWebHistory, createRouter } from "vue-router";
+// 라이브러리 명을 적으면 라이브러리를 임포트 해서 쓰는겁니다
+import List from './components/List.vue'
+
+const routes = [
+  {
+    //이 경로로 들어오면 이 컴포넌트를 보여줘라
+    path: "/list",
+    component: List,
+  },
+  //여러개 하고 싶으면?
+  /* 추가하면 됨
+  {
+    //이 경로로 들어오면 이 컴포넌트를 보여줘라
+    path: "/test",
+    component: TEST,
+  },
+   */
+];
+// vue-router4 사용법 대로 createRouter() 안에 설정 막 집어넣으면 끝
+// 세부 설정만 만지면 됨
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
+
+export default router; 
+```
+
+```js
+// main.js
+import { createApp } from 'vue'
+import App from './App.vue'
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap.js'
+
+import List from './router.js'
+createApp(App).use(List).mount('#app')
+```
+
+마지막 설정 남음
+
+```HTML
+<template>
+  ...
+    <!-- <List 
+    :blogData="item"
+    v-for="(item) in listData" :key="item"></List> -->
+    <router-view 
+    :blogData="item"
+    v-for="(item) in listData" :key="item">
+    <!-- router-view가 url에 따라서 보여줌 url이 /list 면 list component 를 보여줄꺼임 물론 지금은 안됨 - 데이터가 없어서 
+    그럼 props를 전달 해야는데 어떻게 하지? props 하던대로 하면 됨-->
+  ...
+</template>
+
+<script>
+// import List from "./components/List.vue";
+import listData from "./assets/listData.js";
+
+export default {
+  name: "App",
+  data() {
+    return {
+      listData: listData,
+    };
+  },
+  components: {
+    // List: List,
+  },
+};
+</script>
+
+```
+
+페이지 나눌 땐 router.js만 바꾸면 됨
+
+Home.vue를 추가하고 List.vue의 구조를 바꾸자
+
+```HTML
+<!-- Home.vue -->
+<template>
+  <div class="row">
+    <div class="col-4">
+      <img
+        src="../assets/profile.jpeg"
+        class="img-fluid"
+        alt="../assets/profile.jpeg"
+      />
+    </div>
+    <div class="col-8">
+      <div class="card">
+        <div class="card" style="width: 18rem"></div>
+        <div class="card-body">
+          <h5 class="card-title">
+            안녕하세요. Vue.js를 공부하고 있는 devjyno96 입니다.
+          </h5>
+          <p class="fs-4">
+            코딩애플님의 강의를 들으면서 진행하니 혼자 하는것 보다 훨신 빠르고
+            쉽네요.
+          </p>
+          <p class="fs-5">좋은 강의 열어주셔서 감사합니다.</p>
+          <p class="fs-5">
+            내일 까지 다 듣고 주말에 하고싶은 페이지 만들어 보자구요.
+          </p>
+
+          <a href="https://github.com/devjyno96" class="card-link">github</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+    name : 'Home',
+};
+</script>
+```
+
+```HTML
+<!-- List.vue -->
+<template>
+  <div v-for="(blogData) in listData" :key="blogData">
+    <h5>{{blogData.title}}</h5>
+    <p>{{blogData.content}}</p>
+    <p>{{blogData.date}}</p>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "List",
+  props: {
+    listData: Object,
+  },
+};
+</script>
+```
+```HTML
+<!-- App.vue -->
+<template>
+  ...
+    <router-view 
+    :listData="listData"
+    >
+    </router-view>
+  ...
+</template>
+
+<script>
+...
+import listData from "./assets/listData.js";
+
+export default {
+  name: "App",
+  data() {
+    return {
+      listData: listData,
+    };
+  },
+  ...
+};
+```
+```js
+//router.js-->
+import { createWebHistory, createRouter } from "vue-router";
+// 라이브러리 명을 적으면 라이브러리를 임포트 해서 쓰는겁니다
+import List from './components/List.vue'
+import Home from './components/Home.vue'
+
+const routes = [
+    {
+        //이 경로로 들어오면 이 컴포넌트를 보여줘라
+        path: "/list",
+        component: List,
+    },
+    {
+        //이 경로로 들어오면 이 컴포넌트를 보여줘라
+        path: "/home",
+        component: Home,
+    },
+];
+// vue-router4 사용법 대로 createRouter() 안에 설정 막 집어넣으면 끝
+// 세부 설정만 만지면 됨
+const router = createRouter({
+    history: createWebHistory(),
+    routes,
+});
+
+export default router; 
+```
+이렇게 페이지별로 나누고 싶으면 컴포넌트로 나누면 됩니다.
+
+`<router-link to='/보낼URL'>` 이런게 있음
+다른 페이지 이동 링크 만들 때 쓰는겁니다 오 굳
+
+```HTML
+<!-- App.vue -->
+<template>
+  ...
+    <router-link to="/">홈페이지</router-link>
+    <br>
+    <router-link to="/list">리스트 페이지</router-link>
+    <router-view 
+    :listData="listData"
+    >
+    </router-view>
+  ...
+</template>
+
+<script>
+import listData from "./assets/listData.js";
+
+export default {
+  name: "App",
+  data() {
+    return {
+      listData: listData,
+    };
+  },
+  ...
+};
+```
+
+이렇게 사용하면 됩니다
+
+숙제 - 상세 페이지 만들기
+/detail 들어갔을 때 detail 컴포넌트로 이동하면 됨 - 내일 하자
