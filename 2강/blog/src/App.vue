@@ -65,6 +65,17 @@
       </form>
     </div>
   </nav>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+        <img src="./assets/Caspar_David_Friedrich_-_Wanderer_above_the_sea_of_fog.jpe." class="img-fluid" alt="./assets/Caspar_David_Friedrich_-_Wanderer_above_the_sea_of_fog.jpe.">
+      </div>
+      <div class="col-8">
+        
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -81,6 +92,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
