@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-for="(blogData) in listData" :key="blogData">
     <h5>{{blogData.title}}</h5>
     <p>{{blogData.content}}</p>
     <p>{{blogData.date}}</p>
@@ -10,8 +10,7 @@
 export default {
   name: "List",
   props: {
-    blogData: Object,
-    show_id: Number,
+    listData: Object,
   },
 };
 </script>
