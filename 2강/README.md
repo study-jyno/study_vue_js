@@ -47,9 +47,57 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 ...
 ```
 
+https://getbootstrap.com/docs/4.5/getting-started/download/#yarn
 - npm 으로는 안됩니다. m1이라 그런가 따라서 yarn 으로 진행하겠습니다.
+- `vue create blog --packageManager yarn`
+- `cd blog`
 - `yarn add bootstrap`
 - `yarn add @popperjs/core` 이게 필요하답니다
-- `yarn run serve`
+- `yarn serve`
 - 서버 구동 완료
   
+아래처럼 사용하면 됨
+
+```HTML
+<template>
+<button type="button" class="btn btn-primary">Primary</button>
+</template>
+
+<script>
+
+export default {
+  name: 'App',
+  components: {
+  }
+}
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```
+
+아니 css는 잘 되는데 왜 js가 안먹지?
+
+아래와 같이 `main.js` 임포트 방법을 변경했습니다 - 정상 작동 확인
+```js
+import { createApp } from 'vue'
+import App from './App.vue'
+
+import 'bootstrap/dist/css/bootstrap.css'
+
+
+createApp(App).mount('#app')
+
+import 'bootstrap/dist/js/bootstrap.js'
+```
+
+이제 숙제 합시다
+
