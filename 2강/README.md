@@ -176,7 +176,7 @@ import 'bootstrap/dist/js/bootstrap.js'
         <img
           src="./assets/profile.jpeg"
           class="img-fluid"
-          alt="./assets/profile.jpeg"
+          alt=/assets/profile.jpeg"
         />
       </div>
       <div class="col-8">
@@ -218,3 +218,154 @@ export default {
 }
 </style>
 ```
+
+# 17. blog data binding
+
+`List.vue` 글 목록 페이지 만들기
+
+`src/componets` 안에 생성
+
+```HTML
+<!-- List.vue -->
+<template>
+  <div>
+    <h5>블로그 글 제목</h5>
+    <p>블로그 글 날짜</p>
+  </div>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style>
+</style>
+```
+
+
+```HTML
+<!-- App.vue -->
+<template>
+  ...
+    <List></List>
+  ...
+</template>
+
+<script>
+import List from "./components/List.vue";
+
+export default {
+  name: "App",
+  components: {
+    List: List,
+  },
+};
+</script>
+...
+```
+
+이제 List.vue에 실제 데이터를 넣어보자
+
+`.src/assets/listData.js 생성
+
+```js
+export default [
+    {
+        title: '첫 째 프로젝트 : 허위매물 전문 부동산 앱',
+        content: 'Vue를 이용하면 비누같이 매끈한 앱을 만들 수 있습니다',
+        date: 'September 24, 2021',
+        number: 0
+    }, {
+        title: '둘 째 프로젝트 : 오마카세 배달 앱',
+        content: '음식이 아니라 셰프를 직접 배달해드립니다',
+        date: 'October 20, 2020',
+        number: 1
+    }, {
+        title: '셋 째 프로젝트 : 현피 앱',
+        content: '거리를 설정하면 가장 가까운 파이터를 소개해드려요! 서로 싸워보세요',
+        date: 'April 24, 2019',
+        number: 2
+    }
+]
+```
+```HTML
+<!-- App.vue -->
+  ...
+  <script>
+  ...
+  import listData from "./assets/listData.js";
+
+  export default {
+    name: "App",
+    components: {
+      ...
+      listData: listData,
+    },
+  };
+</script>
+```
+
+블로그 글을 생성해 보자 v-for 사용해서
+
+```HTML
+<!-- List.vue -->
+<template>
+  ...
+    <List 
+    :blogData="item"
+    v-for="(item) in listData" :key="item"></List>
+  ...
+</template>
+
+<script>
+import List from "./components/List.vue";
+import listData from "./assets/listData.js";
+
+export default {
+  name: "App",
+  data() {
+    return {
+      listData: listData,
+    };
+  },
+  components: {
+    List: List,
+  },
+};
+</script>
+...
+```
+
+```HTML
+<!-- List.vue -->
+<template>
+  <div>
+    <h5>{{blogData.title}}</h5>
+    <p>{{blogData.content}}</p>
+    <p>{{blogData.date}}</p>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "List",
+  props: {
+    blogData: Object,
+    show_id: Number,
+  },
+};
+</script>
+
+<style>
+</style>
+```
+
+**성공!**
+
+다음 강의에서 페이지별로 뜯어보자
+
+`/list` 라는 URL로 접속하면 `<List/>` 를 보여주자
+
+
+
+
