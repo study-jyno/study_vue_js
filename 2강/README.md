@@ -828,3 +828,81 @@ export default {
 ```
 
 
+# 20. nested routes / push
+
+nested route?
+- detail/0/author 로 접근하면 작성사 정보 보여주기
+- detail/0/comment 로 접근하면 댓글 보여주기
+다른 url로 나누고 싶으면 nested route 사용
+  
+```js
+...
+const routes = [
+  ...
+    {
+        path: "/detail/:id",
+        component: Detail,
+        children: [
+          // 이런식으로 사용
+            {   
+                //path: "/author",
+                // / 붙이면 안된다 왜? - / 는 root 의미임
+                path: "author",
+                component: Author,
+            },
+            {
+                path: "comment",
+                component: Comment,
+            },
+        ]
+    },
+    ...
+];
+```
+
+list 에서 제목 클릭 시 페이지 이동하게 해보자
+```HTML
+<!-- List.vue -->
+<template>
+  <div v-for="(blogData, i) in listData" :key="blogData">
+    <h5>{{ blogData.title }}</h5>
+    <button>
+      <h5 @click="$router.push({name:'detail', params : {id : i} })">상세 페이지</h5>
+    </button>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "List",
+  props: {
+    listData: Object,
+  },
+};
+</script>
+
+<style>
+</style>
+```
+
+`router.push()`에서 `name`으로 router를 지정하기 때문에 router에서 `name`을 생성해준다
+
+```js
+// router.js
+
+const routes = [
+    {
+        name:'detail',
+        path: "/detail/:id",
+        ...
+    },
+];
+...
+```
+
+페이지 앞으로 가기 뒤로가기 - `$router.go(-1)` 1 이면 앞으로 가기 -1이면 뒤로가기, -2면 2번 뒤로 갑니다.
+
+named views? 여러개 컴포넌트를 보여줄 때 사용 - nav, footer, 이렇게 여러개 보여줄 때 사용함
+redirection도 있음 - 여러가지 기능이 많으니 필요할 때 마다 검색해서 사용하세요
+
+

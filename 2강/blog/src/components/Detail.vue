@@ -4,6 +4,7 @@
     <p>{{ listData[paramsShowDetailListID].content }}</p>
     <p>{{ listData[paramsShowDetailListID].date }}</p>
   </div>
+  <router-view></router-view>
 </template>
 
 <script>

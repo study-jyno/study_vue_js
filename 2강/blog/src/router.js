@@ -4,6 +4,8 @@ import List from './components/List.vue'
 import Home from './components/Home.vue'
 import Detail from './components/Detail.vue'
 import ErrorPage from './components/ErrorPage.vue'
+import Author from './components/Author.vue'
+import Comment from './components/Comment.vue'
 
 const routes = [
     {
@@ -16,12 +18,25 @@ const routes = [
         component: Home,
     },
     {
+        name:'detail',
         path: "/detail/:id",
         // 소괄호 안에 정규 표현식 입역 가능 - 지금은 숫자만 찾아줌
         // path: "/detail/:id(\\d+)",
         // /id/id/id 이런식으로 중복해라 라는 의미 - 검색이 필요하면 vue-router 4 참고
         // path: "/detail/:id*",
         component: Detail,
+        children: [
+            {   
+                //path: "/author",
+                // / 붙이면 안된다 왜? - / 는 root 의미임
+                path: "author",
+                component: Author,
+            },
+            {
+                path: "comment",
+                component: Comment,
+            },
+        ]
     },
     {
         path: "/:anything",
