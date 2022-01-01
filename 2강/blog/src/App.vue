@@ -72,13 +72,14 @@
     <router-link to="/list">리스트 페이지</router-link>
     <br />
     <br />
-
+  <div class="mt-4">
     <router-view
       @changeShowDetail="changeShowDetailEvent"
       :listData="listData"
       :showDetailListID="showDetailListID"
     >
     </router-view>
+  </div>
   </div>
 </template>
 

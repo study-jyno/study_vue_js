@@ -3,6 +3,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import List from './components/List.vue'
 import Home from './components/Home.vue'
 import Detail from './components/Detail.vue'
+import ErrorPage from './components/ErrorPage.vue'
 
 const routes = [
     {
@@ -15,8 +16,16 @@ const routes = [
         component: Home,
     },
     {
-        path: "/detail",
+        path: "/detail/:id",
+        // 소괄호 안에 정규 표현식 입역 가능 - 지금은 숫자만 찾아줌
+        // path: "/detail/:id(\\d+)",
+        // /id/id/id 이런식으로 중복해라 라는 의미 - 검색이 필요하면 vue-router 4 참고
+        // path: "/detail/:id*",
         component: Detail,
+    },
+    {
+        path: "/:anything",
+        component: ErrorPage,
     },
 ];
 // vue-router4 사용법 대로 createRouter() 안에 설정 막 집어넣으면 끝

@@ -713,3 +713,118 @@ export default {
 ## 숙제 완료!
 
 
+# 19. vue router url parameter
+
+나는 숙제할 때 id를 props로 넘겨 줬는데 파라미터로도 값을 넘겨줄 수 있는듯?
+
+/detail/x 로 접근하면 x번째 게시물 보여주기
+
+1. router 파일 수정
+```js
+//router.js
+const routes = [
+  ...
+    {
+        // 이렇게 쓰면 파라미터 전달 가능
+        // : 이건 아무 문자나 사용 가능
+        path: "/detail/:id",
+        component: Detail,
+    },
+    ...
+];
+```
+
+2. router의 값을 vue에서 사용하기
+-  url에 있는 값을 어떻게 가져올까?
+```HTML
+<template>
+  <div>
+    <!-- $route.params 에 다 들어있음 -->
+    <!-- 만약 router.js 에서 /detail/:작명 이런 식으로 선언했으면 $route.params.작명 으로 호출 하면 됨 -->
+    <h5>{{listData[$route.params.id].title}}</h5>
+    <p>{{listData[$route.params.id].content}}</p>
+    <p>{{listData[$route.params.id].date}}</p>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Detail",
+  props: {
+    listData: Array,
+    showDetailListID:Number,
+  },
+};
+</script>
+
+<style>
+</style>
+```
+
+이런식으로 data에서 사용 할 수 있음
+```HTML
+<script>
+export default {
+  name: "Detail",
+  data() {
+    return {
+      // 이렇게 할 수 있음
+      paramsShowDetailListID : this.$route.params.id,
+    };
+  },
+};
+</script>
+```
+
+파라미터에서 정규표현식으로 엄격하게 규정할 수 있음
+```js
+// router.js
+const routes = [
+    {
+        path: "/detail/:id(\\d+)",
+        // 소괄호 안에 정규 표현식 입역 가능 - 지금은 숫자만 찾아줌
+        // /id/id/id 이런식으로 중복해라 라는 의미 - 검색이 필요하면 vue-router 4 참고
+        // path: "/detail/:id*",
+        component: Detail,
+    },
+];
+```
+조건에 맞지 않는 path parameter를 입력하면 라우터를 찾지 못함
+
+404 페이지도 만들 수 있음 - 찾을 수 없는 페이지에 접근 시 404 페이지로 보내주면 됨
+
+```js
+...
+import ErrorPage from './components/ErrorPage.vue'
+
+const routes = [
+  ...
+    {
+        // 아무 문자열이나 다 받아들임
+        //사용시 중복이 될거 같은데? - 순서가 중요함 - router를 위쪽에서 선언하면 우선순위가 높음 - 주의해서 사용하셈
+        path: "/:anything",
+        component: ErrorPage,
+    },
+];
+...
+```
+
+```HTML
+<!-- ErrorPage.vue -->
+<template>
+  <div>
+    404 not found
+  </div>
+</template>
+
+<script>
+export default {
+  name: "ErrorPage",
+};
+</script>
+
+<style>
+</style>
+```
+
+

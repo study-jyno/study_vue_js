@@ -1,17 +1,22 @@
 <template>
   <div>
-    <h5>{{listData[showDetailListID].title}}</h5>
-    <p>{{listData[showDetailListID].content}}</p>
-    <p>{{listData[showDetailListID].date}}</p>
+    <h5>{{ listData[paramsShowDetailListID].title }}</h5>
+    <p>{{ listData[paramsShowDetailListID].content }}</p>
+    <p>{{ listData[paramsShowDetailListID].date }}</p>
   </div>
 </template>
 
 <script>
 export default {
   name: "Detail",
+  data() {
+    return {
+      paramsShowDetailListID : this.$route.params.id,
+    };
+  },
   props: {
-    listData: Object,
-    showDetailListID:Number,
+    listData: Array,
+    showDetailListID: Number,
   },
 };
 </script>
