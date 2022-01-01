@@ -68,10 +68,15 @@
   <br />
   <div class="container">
     <router-link to="/">홈페이지</router-link>
-    <br>
+    <br />
     <router-link to="/list">리스트 페이지</router-link>
-    <router-view 
-    :listData="listData"
+    <br />
+    <br />
+
+    <router-view
+      @changeShowDetail="changeShowDetailEvent"
+      :listData="listData"
+      :showDetailListID="showDetailListID"
     >
     </router-view>
   </div>
@@ -86,7 +91,13 @@ export default {
   data() {
     return {
       listData: listData,
+      showDetailListID: 0,
     };
+  },
+  methods: {
+    changeShowDetailEvent($event) {
+      this.showDetailListID = $event
+    },
   },
   components: {
     // List: List,

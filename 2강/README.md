@@ -616,3 +616,100 @@ export default {
 
 숙제 - 상세 페이지 만들기
 /detail 들어갔을 때 detail 컴포넌트로 이동하면 됨 - 내일 하자
+
+1. Detail component 생성
+2. list 에서 타이틀 클릭 시 show Datail list id 해당 id 로 변경
+3. detal vue에 전달
+
+```HTML
+<!-- App.vue -->
+<template>
+    <!-- custom event 받는 함수 -->
+    <!-- @changeShowDetail="changeShowDetailEvent" -->
+    <router-view
+      @changeShowDetail="changeShowDetailEvent"
+      :listData="listData"
+      :showDetailListID="showDetailListID"
+    >
+    </router-view>
+</template>
+
+<script>
+import listData from "./assets/listData.js";
+
+export default {
+  name: "App",
+  data() {
+    return {
+      listData: listData,
+      showDetailListID: 0,
+    };
+  },
+  methods: {
+    // custom event 받는 함수
+    // 날라온 이벤트 값을 app 데이터에 넣어줌
+    changeShowDetailEvent($event) {
+      this.showDetailListID = $event
+    },
+  },
+};
+</script>
+```
+
+
+```HTML
+<!-- List.vue -->
+<template>
+  <div v-for="(blogData, i) in listData" :key="blogData">
+    <h5>{{ blogData.title }}</h5>
+    <button>
+      <!-- App 으로 이벤트를 날림 - index 값을 담아서 날림 -->
+      <router-link @click="changeShowDetail(i)" to="/detail">상세 페이지</router-link>
+    </button>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "List",
+  props: {
+    listData: Object,
+  },
+  methods:{
+    // 날리는 함수
+    changeShowDetail(showBlogId){
+      this.$emit('changeShowDetail', showBlogId);
+    },
+  }
+};
+</script>
+```
+
+
+```HTML
+<!-- Detail.vue -->
+<template>
+  <div>
+    <!-- 그냥 저장된 값 보여주면 됨 -->
+    <h5>{{listData[showDetailListID].title}}</h5>
+    <p>{{listData[showDetailListID].content}}</p>
+    <p>{{listData[showDetailListID].date}}</p>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Detail",
+  props: {
+    listData: Object,
+    showDetailListID:Number,
+  },
+};
+</script>
+```
+
+
+
+## 숙제 완료!
+
+

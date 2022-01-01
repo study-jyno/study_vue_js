@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 // 라이브러리 명을 적으면 라이브러리를 임포트 해서 쓰는겁니다
 import List from './components/List.vue'
 import Home from './components/Home.vue'
+import Detail from './components/Detail.vue'
 
 const routes = [
     {
@@ -10,9 +11,12 @@ const routes = [
         component: List,
     },
     {
-        //이 경로로 들어오면 이 컴포넌트를 보여줘라
         path: "/",
         component: Home,
+    },
+    {
+        path: "/detail",
+        component: Detail,
     },
 ];
 // vue-router4 사용법 대로 createRouter() 안에 설정 막 집어넣으면 끝

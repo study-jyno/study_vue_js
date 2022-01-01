@@ -1,8 +1,9 @@
 <template>
-  <div v-for="(blogData) in listData" :key="blogData">
-    <h5>{{blogData.title}}</h5>
-    <p>{{blogData.content}}</p>
-    <p>{{blogData.date}}</p>
+  <div v-for="(blogData, i) in listData" :key="blogData">
+    <h5>{{ blogData.title }}</h5>
+    <button>
+      <router-link @click="changeShowDetail(i)" to="/detail">상세 페이지</router-link>
+    </button>
   </div>
 </template>
 
@@ -12,6 +13,11 @@ export default {
   props: {
     listData: Object,
   },
+  methods:{
+    changeShowDetail(showBlogId){
+      this.$emit('changeShowDetail', showBlogId);
+    },
+  }
 };
 </script>
 
