@@ -5,7 +5,7 @@
       </div>
       <span class="profile-name">{{post.name}}</span>
     </div>
-    <div class="post-body" v-bind:style="{ 'background-image': 'url(' + post.postImage + ')' }"></div>
+    <div class="post-body" :style="{ backgroundImage : `url(${post.postImage})` }"></div>
     <div class="post-content">
       <p>{{post.likes}} Likes</p>
       <p><strong>{{post.name}}</strong> {{post.content}}</p>

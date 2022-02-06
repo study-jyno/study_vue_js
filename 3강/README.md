@@ -469,5 +469,10 @@ export default {
 
 `v-bind:style="{ 'background-image': 'url(' + post.userImage + ')' }"`
 
+이런식으로도 가능
+
+```
+<div class="post-body" :style="{ backgroundImage : `url(${post.postImage})` }"></div>
+```
 숙제 끝!
 ---
