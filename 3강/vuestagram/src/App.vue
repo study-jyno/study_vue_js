@@ -9,8 +9,8 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container />
-
+  <Container :postData=postData />
+  
   <div class="footer">
     <ul class="footer-button-plus">
       <input type="file" id="file" class="inputfile" />
@@ -21,11 +21,17 @@
 
 <script>
 import Container from "./components/Container";
+import postData from "./assets/postData.json";
 
 export default {
   name: "App",
   components: {
     Container,
+  },
+  data() {
+    return {
+      postData: postData,
+    };
   },
 };
 </script>

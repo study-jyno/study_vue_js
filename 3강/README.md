@@ -310,3 +310,64 @@ Post에 준비된 데이터를 넣어보자
 3. 이미지는 어려울 수 있음 - 해보고 안되면 다음에 같이할꺼임
    * App.vue에 데이터가 있음
    * props로 2번 값을 잘 넘겨봐라 - App -> Container -> Post 
+
+---
+### 1. 값을 어떻게 넣더라?
+
+```json
+// ./asset/postData.json
+[
+    {
+        "name": "Kim Hyun",
+        "userImage": "https://placeimg.com/100/100/arch",
+        "postImage": "https://placeimg.com/640/480/arch",
+        "likes": 36,
+        "date": "May 15",
+        "liked": false,
+        "content": "오늘 무엇을 했냐면요 아무것도 안했어요 ?",
+        "filter": "perpetua"
+    },
+    {
+        "name": "John Doe",
+        "userImage": "https://placeimg.com/200/200/people",
+        "postImage": "https://placeimg.com/640/480/people",
+        "likes": 20,
+        "date": "Apr 20",
+        "liked": false,
+        "content": "흔한 자랑스타그램",
+        "filter": "clarendon"
+    },
+    {
+        "name": "Minny",
+        "userImage": "https://placeimg.com/100/100/animals",
+        "postImage": "https://placeimg.com/640/480/animals",
+        "likes": 49,
+        "date": "Apr 4",
+        "liked": false,
+        "content": "우리집 개는 화장실 물도 내림",
+        "filter": "lofi"
+    }
+]
+```
+
+```vue
+<!-- App.vue -->
+<script>
+...
+import postData from "./assets/postData.json";
+
+export default {
+  name: "App",
+  components: {
+    Container,
+  },
+  data() {
+    return {
+      postData: postData, // 사용할 값을 이렇게 선언하면 됨
+    };
+  },
+};
+</script>
+```
+
+### 2. props 어떻게 쓰더라?

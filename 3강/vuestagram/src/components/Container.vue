@@ -1,17 +1,18 @@
 <template>
   <div>
-    <Post />
-    <Post />
-    <Post />
+    <Post v-for="post in postData" :key="post" :post=post />
   </div>
 </template>
 
 <script>
-import Post from './Post.vue'
+import Post from "./Post.vue";
 export default {
   name: "Container",
   components: {
-      Post,
+    Post,
+  },
+  props: {
+    postData: Object,
   },
 };
 </script>

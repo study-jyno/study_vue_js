@@ -1,14 +1,15 @@
 <template>
   <div class="post">
     <div class="post-header">
-      <div class="profile"></div>
-      <span class="profile-name">ChanKim</span>
+      <div class="profile" v-bind:style="{ 'background-image': 'url(' + post.userImage + ')' }" >
+      </div>
+      <span class="profile-name">{{post.name}}</span>
     </div>
-    <div class="post-body"></div>
+    <div class="post-body" v-bind:style="{ 'background-image': 'url(' + post.postImage + ')' }"></div>
     <div class="post-content">
-      <p>43 Likes</p>
-      <p><strong>글쓴이아이디</strong> 임시내용</p>
-      <p class="date">May 15</p>
+      <p>{{post.likes}} Likes</p>
+      <p><strong>{{post.name}}</strong> {{post.content}}</p>
+      <p class="date">{{post.date}}</p>
     </div>
   </div>
 </template>
@@ -17,6 +18,9 @@
 export default {
   name: "Post",
   components: {},
+  props:{
+      post:Object,
+  }
 };
 </script>
 
@@ -25,7 +29,6 @@ export default {
   width: 100%;
 }
 .profile {
-  background-image: url("https://placeimg.com/100/100/arch");
   width: 30px;
   height: 30px;
   background-size: 100%;
@@ -44,7 +47,6 @@ export default {
   padding: 10px;
 }
 .post-body {
-  background-image: url("https://placeimg.com/640/480/animals");
   height: 450px;
   background-position: center;
   background-size: cover;
