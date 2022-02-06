@@ -38,3 +38,9 @@ npm run serve
 
 들어가면 잘 나옴
 
+
+Hello world 다 지우고 새로 넣을꺼임
+
+무작정 작성하지 말고 기획 먼저 하고 하자
+
+![기획](./images/1.png)
