@@ -371,3 +371,103 @@ export default {
 ```
 
 ### 2. props 어떻게 쓰더라?
+```vue
+<template>
+<!-- App.vue -->
+  ...
+  <Container :postData=postData />
+  <!-- 넣어줄 값을 이렇게 작성하면 됨 -->
+  <!-- Component_Name :ChildDataName=ParentDataName -->
+  <!-- https://kr.vuejs.org/v2/guide/components-props.html -->
+  ...
+</template>
+
+<script>
+import Container from "./components/Container";
+import postData from "./assets/postData.json";
+
+export default {
+  name: "App",
+  components: {
+    Container,
+  },
+  data() {
+    return {
+      postData: postData,
+    };
+  },
+};
+</script>
+
+<style
+...
+</style>
+
+```
+
+### 3. probs + v-for?
+```vue
+<!-- Container.vue -->
+<template>
+  <div>
+    <Post v-for="post in postData" :key="post" :post=post />
+    <!--  v-for는 동일하게 작성하되 key는 v-bind 진행-->
+  </div>
+</template>
+
+<script>
+import Post from "./Post.vue";
+export default {
+  name: "Container",
+  components: {
+    Post,
+  },
+  props: { // v-bind로 전달 받은 probs data 이름을 명시한다
+    postData: Object,
+  },
+};
+</script>
+```
+
+```vue
+<!-- Post.vue -->
+<template>
+  <div class="post">
+    <div class="post-header">
+      <div class="profile" v-bind:style="{ 'background-image': 'url(' + post.userImage + ')' }" >
+      </div>
+      <span class="profile-name">{{post.name}}</span>
+    </div>
+    <div class="post-body" v-bind:style="{ 'background-image': 'url(' + post.postImage + ')' }"></div>
+    <div class="post-content">
+      <p>{{post.likes}} Likes</p>
+      <p><strong>{{post.name}}</strong> {{post.content}}</p>
+      <p class="date">{{post.date}}</p>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Post",
+  components: {},
+  props:{
+      post:Object, // 이거 마음대로 읽어서 사용하면 됩니다.
+  }
+};
+</script>
+```
+
+### 4. 이미지는 어떻게 함?
+이미지는 속성이기 떄문에 바로 넣을 수 없다 -> 다른 방법 사용 [Link](https://kr.vuejs.org/v2/guide/syntax.html#%EB%8F%99%EC%A0%81-%EC%A0%84%EB%8B%AC%EC%9D%B8%EC%9E%90)
+
+```vue
+<div class="profile" v-bind:style="{ 'background-image': 'url(' + post.userImage + ')' }" >
+      </div>
+```
+{{Data}} 는 속성 내부에서는 사용이 불가능함 -> 스트링으로 뽑아서 사용
+
+`v-bind:style="{ 'background-image': 'url(' + post.userImage + ')' }"`
+
+숙제 끝!
+---
